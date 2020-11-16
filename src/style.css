@@ -1,0 +1,17 @@
+.alien {
+    height: 30vmin;
+}
+
+.title {
+    margin: 0%;
+}
+
+.content {
+    width: 100%;
+}
+
+p {
+    margin: 0%;
+    margin-bottom: 1%;
+    font-size: 24px;
+}
