@@ -10,8 +10,22 @@
     width: 100%;
 }
 
+.button {
+    margin: 1% !important;
+    width: 250px;
+}
+
+.card {
+    align-self: center;
+    margin-top: 1%;
+    margin-left: 15%;
+    margin-right: 15%;
+    background-color: #1F262A !important;
+}
+
 p {
     margin: 0%;
-    margin-bottom: 1%;
+    margin-top: 1%;
     font-size: 24px;
+    color: white;
 }
