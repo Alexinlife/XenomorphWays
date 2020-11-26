@@ -1,3 +1,4 @@
+import BehaviourTree from "./BehaviourTree";
 
 /**
  * @author 1838304 - Alex Lajeunesse
@@ -15,14 +16,20 @@ class Alien {
      */
     constructor() {
         this.aggressivity = 0;
-    }
+        this.alienState = 
+        // Création du behaviour tree du Xenomorph
+        this.bt = new BehaviourTree();
+        // branche nostimuli
+        this.bt.createBehaviour(0, "decorator", "nostimuli");
+        this.bt.createBehaviour(1, "leaf", "donotbother");
 
-    inVents() {
-
-    }
-
-    outVents() {
-
+        // branche heardsound
+        this.bt.createBehaviour(0, "selector", "heardsound");
+        this.bt.createBehaviour(3, "leaf", "approach");
+        this.bt.createBehaviour(3, "sequence", "search");
+        this.bt.createBehaviour(5, "leaf", "searchobject");
+        this.bt.createBehaviour(5, "decorator", "sawsomething");
+        this.bt.createBehaviour(7, "leaf", "kill");
     }
 
     /**
@@ -45,8 +52,6 @@ class Alien {
     searchLocker() {
 
     }
-
-
 }
 
 export default Alien;

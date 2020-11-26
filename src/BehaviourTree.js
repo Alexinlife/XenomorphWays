@@ -21,7 +21,7 @@ class BehaviourTree {
         this.behaviours = [];
         this.currentId = 0;
 
-        this.createBehaviour(null, "selector", "Le Xenomorph n'est pas dans les parrages...");
+        this.createBehaviour(null, "selector", "root");
     }
 
     /**
@@ -34,6 +34,7 @@ class BehaviourTree {
      * "selector"     donne plusieurs choix de comportement
      * "sequence"     donne une suite de comportement à suivre
      * "decorator"    parent d'un seul noeud
+     * "leaf"         feuille d'une branche
      * @returns null
      */
     createBehaviour(parent_id, type, description) {

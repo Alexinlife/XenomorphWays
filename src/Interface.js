@@ -79,9 +79,8 @@ class Interface extends React.Component {
                 <Button className="button" color="secondary" variant="contained" onClick={this.run.bind(this)}>Courir</Button>
                 <Button className="button" variant="contained">Marcher</Button>
                 <Button className="button" variant="contained">S'arrêter</Button>
-                <p>Se cacher</p>
-                <Button className="button" variant="contained">Sous un objet</Button>
-                <Button className="button" variant="contained">Dans un casier</Button>
+                <p>Furtivité</p>
+                <Button className="button" variant="contained">Se cacher</Button>
                 <Button className="button" variant="contained">S'accroupir</Button>
                 <p>Actions</p>
                 <Button className="button" color="secondary" variant="contained">Crier</Button>
