@@ -16,7 +16,7 @@ class Alien {
      */
     constructor() {
         this.aggressivity = 0;
-        this.alienState = 
+        this.alienState = "Le Xenomorph n'est pas dans les parrages..."
         // Création du behaviour tree du Xenomorph
         this.bt = new BehaviourTree();
         // branche nostimuli
@@ -30,27 +30,6 @@ class Alien {
         this.bt.createBehaviour(5, "leaf", "searchobject");
         this.bt.createBehaviour(5, "decorator", "sawsomething");
         this.bt.createBehaviour(7, "leaf", "kill");
-    }
-
-    /**
-     * Gère le comportement de l'alien lorsqu'il entend un son
-     * 
-     * @param {*} intensity Le volume du bruit sur une échelle de 1 à 3
-     */
-    heardSound(intensity) {
-        return "Oh boy.";
-    }
-    
-    kill() {
-
-    }
-
-    searchObject() {
-
-    }
-
-    searchLocker() {
-
     }
 }
 

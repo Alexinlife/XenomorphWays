@@ -22,7 +22,7 @@ class Interface extends React.Component {
         this.alien = new Alien();
 
         this.state = {
-            alienState: "Le Xenomorph n'est pas dans les parrages..."
+            alienState: this.alien.alienState
         }
     }
 
@@ -63,7 +63,7 @@ class Interface extends React.Component {
 
     changeAlienState(alienState) {
         this.setState({
-            alienState: alienState
+            alienState: this.alien.alienState
         });
     }
 
