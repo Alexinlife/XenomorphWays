@@ -17,10 +17,11 @@ class Behaviour {
      * @param id L'identifiant du noeud
      * @returns null
      */
-    constructor(id, parentId, type, description) {
+    constructor(id, parentId, type, name, description) {
         this.id = id;
         this.parentId = parentId;
         this.type = type;
+        this.name = name;
         this.description = description;
     }
 }

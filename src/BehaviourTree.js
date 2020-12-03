@@ -20,6 +20,7 @@ class BehaviourTree {
     constructor() {
         this.behaviours = [];
         this.currentId = 0;
+        this.cursor = 0;
 
         this.createBehaviour(null, "selector", "root");
     }
@@ -35,20 +36,22 @@ class BehaviourTree {
      * "sequence"     donne une suite de comportement à suivre
      * "decorator"    parent d'un seul noeud
      * "leaf"         feuille d'une branche
+     * @param name le nom donné au comportement
+     * @param description la description du comportement, peut donner plus de contexte
      * @returns null
      */
-    createBehaviour(parentId, type, description) {
+    createBehaviour(parentId, type, name, description) {
         var valide = true
 
-        // Validation de la description unique
+        // Validation du nom unique
         for (let i = 0; i < this.behaviours.length; i++) {
-            if (this.behaviours[i].description === description) {
+            if (this.behaviours[i].name === name) {
                 valide = false;
             }
         }
-        // Si la description est unique
+        // Si le nom est unique
         if (valide) {
-            this.behaviours.push(new Behaviour(this.currentId, parentId, type, description));
+            this.behaviours.push(new Behaviour(this.currentId, parentId, type, name, description));
             this.currentId++;
         }
     }
@@ -56,34 +59,38 @@ class BehaviourTree {
     /**
      * @author Alex Lajeunesse
      * 
-     * @description Trouve le comportement avec la description correspondante.
+     * @description Trouve le comportement avec le nom correspondant.
      * 
-     * @param {*} desc La description du comportement
+     * @param {*} name Le nom du comportement
+     * @returns le comportement s'il existe, sinon false
      */
-    getBehaviourByDesc(desc) {
+    getBehaviourByName(name) {
 
         for (let i = 0; i < this.behaviours.length; i++) {
-
-            if (desc === this.behaviours[i].description) {
+            if (name === this.behaviours[i].name) {
+                this.cursor = this.behaviours[i].id;
                 return this.behaviours[i];
             }
         }
+        return false;
     }
 
     /**
      * @author Alex Lajeunesse
      * 
-     * @description Trouve les enfants directement lié au comportement ayant la description demandé
+     * @description Trouve les enfants directement lié au comportement ayant le nom demandé
      * 
-     * @param {*} desc La description du comportement
+     * @param {*} name Le nom du comportement
      * @returns Un tableau contenant les enfants directement liés au comportement demandé
      */
-    getChildrenByDesc(desc) {
-        var parent = this.getBehaviourByDesc(desc);
+    getChildrenByName(name) {
+        var parent = this.getBehaviourByName(name);
         var children = [];
 
+        if (parent) {
+            this.cursor = parent.id;
+        }
         for (let i = 0; i < this.behaviours.length; i++) {
-
             if (parent.id === this.behaviours[i].parentId) {
                 children.push(this.behaviours[i]);
             }

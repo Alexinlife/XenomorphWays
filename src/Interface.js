@@ -18,8 +18,10 @@ class Interface extends React.Component {
 
     constructor(props) {
         super(props);
-        this.alienDistance = 100;
+        this.alienDistance = 10;
         this.alien = new Alien();
+
+        this.alien.chooseNextMove("nostimuli");
 
         this.state = {
             alienState: this.alien.alienState
@@ -27,19 +29,25 @@ class Interface extends React.Component {
     }
 
     run() {
-        this.alienDistance -= 25;
-        this.changeAlienState(this.alien.heardSound(2));
+        // L'Alien entendra du son
+        this.alien.chooseNextMove("heardsound");
+
+        // Si l'Alien s'approche, avertir l'interface que la distance a changé
+        if (this.alien.alienBehaviour.name === "approach") {
+            this.changeAlienDistance(-2);
+        }
+        // Si l'Alien est très près du joueur, lui donner l'action de chercher
+        if (this.alienDistance <= 2.5) {
+            this.alien.chooseNextMove("search");
+        }
+        this.changeAlienState();
     }
 
     walk() {
-        this.changeAlienState(this.alien.heardSound(1));
+        
     }
 
-    hideObject() {
-        this.changeAlienState(this.alien.heardSound(1));
-    }
-
-    hideLocker() {
+    hide() {
 
     }
 
@@ -48,20 +56,23 @@ class Interface extends React.Component {
     }
 
     scream() {
-        this.changeAlienState(this.alien.heardSound(3));
 
     }
 
     throwObject() {
-        this.changeAlienState(this.alien.heardSound(2));
-
+        this.changeAlienDistance(-10);
     }
 
     useTracker() {
-        this.changeAlienState(this.alien.heardSound(1));
+        this.alien.alienState = "Le Xenomorph est à " + this.alienDistance + " mètres.";
+        this.changeAlienState();
     }
 
-    changeAlienState(alienState) {
+    changeAlienDistance(value) {
+        this.alienDistance += value;
+    }
+
+    changeAlienState() {
         this.setState({
             alienState: this.alien.alienState
         });
@@ -77,15 +88,14 @@ class Interface extends React.Component {
                 </Card>
                 <p>Mouvements</p>
                 <Button className="button" color="secondary" variant="contained" onClick={this.run.bind(this)}>Courir</Button>
-                <Button className="button" variant="contained">Marcher</Button>
-                <Button className="button" variant="contained">S'arrêter</Button>
+                <Button className="button" variant="contained" onClick={this.walk.bind(this)}>Marcher</Button>
                 <p>Furtivité</p>
-                <Button className="button" variant="contained">Se cacher</Button>
-                <Button className="button" variant="contained">S'accroupir</Button>
+                <Button className="button" variant="contained" onClick={this.hide.bind(this)}>Se cacher</Button>
+                <Button className="button" variant="contained" onClick={this.crouch.bind(this)}>S'accroupir</Button>
                 <p>Actions</p>
-                <Button className="button" color="secondary" variant="contained">Crier</Button>
-                <Button className="button" variant="contained">Lancer un objet</Button>
-                <Button className="button" color="primary" variant="contained">Utiliser le traceur</Button>
+                <Button className="button" color="secondary" variant="contained" onClick={this.scream.bind(this)}>Crier</Button>
+                <Button className="button" variant="contained" onClick={this.throwObject.bind(this)}>Lancer un objet</Button>
+                <Button className="button" color="primary" variant="contained" onClick={this.useTracker.bind(this)}>Utiliser le traceur</Button>
             </div>
         );
     }
