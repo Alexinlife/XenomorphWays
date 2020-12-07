@@ -27,13 +27,13 @@ class Alien {
 
         // branche heardsound
         this.bt.createBehaviour(0, "selector", "heardsound");
-        this.bt.createBehaviour(3, "leaf", "approach", "Le Xenomorph s'approche !");
+        this.bt.createBehaviour(3, "leaf", "approach", "Le Xenomorph est si près !");
         this.bt.createBehaviour(3, "sequence", "search");
-        this.bt.createBehaviour(5, "leaf", "searchobject", "Tu le vois chercher sa proie. Il est si près.");
+        this.bt.createBehaviour(5, "leaf", "searchobject", "Tu le vois chercher sa proie.");
         this.bt.createBehaviour(5, "decorator", "sawsomething");
         this.bt.createBehaviour(7, "leaf", "kill", "Le Xenomorph t'as vu et t'as tué.");
 
-        this.peacefulness = 20;
+        this.peacefulness = 15;
         this.alienState = "";
         this.alienBehaviour = null;
     }

@@ -45,7 +45,7 @@ class Interface extends React.Component {
      * @returns null
      */
     run() {
-        this.produceSound(-2, -2);
+        this.triggerAlien(-2, -2);
     }
 
     /**
@@ -57,22 +57,46 @@ class Interface extends React.Component {
      * @returns null
      */
     walk() {
-        this.produceSound(-1, 0);
+        this.triggerAlien(-1, 0);
     }
 
+    /**
+     * @author Alex Lajeunesse
+     * 
+     * @description Guide l'Alien lorsque le joueur clique sur le bouton "Se cacher"
+     * 
+     * @params null
+     * @returns null
+     */
     hide() {
-
+        this.triggerAlien(2, 1);
     }
 
+    /**
+     * @author Alex Lajeunesse
+     * 
+     * @description Guide l'Alien lorsque le joueur clique sur le bouton "S'accroupir"
+     * 
+     * @params null
+     * @returns null
+     */
     crouch() {
-
+        this.triggerAlien(1, 0);
     }
 
+    /**
+     * @author Alex Lajeunesse
+     * 
+     * @description Guide l'Alien lorsque le joueur clique sur le bouton "Lancer un objet"
+     * 
+     * @params null
+     * @returns null
+     */
     throwObject() {
         if (this.alienDistance <= 5) {
-            this.produceSound(1, 0);
+            this.triggerAlien(1, 0);
         } else {
-            this.produceSound(-2, -1);
+            this.triggerAlien(-2, -1);
         }
         this.changeAlienDistance(-1);
     }
@@ -98,7 +122,7 @@ class Interface extends React.Component {
      * @param {*} peacefulness Le changement à apporter 
      * @param {*} distance 
      */
-    produceSound(peacefulness, distance) {
+    triggerAlien(peacefulness, distance) {
         this.changeAlienPeacefulness(peacefulness);
         // L'Alien entendra du son
         this.alien.chooseNextMove("heardsound");
@@ -108,7 +132,7 @@ class Interface extends React.Component {
             this.changeAlienDistance(distance);
         }
         // Si l'Alien est très près du joueur, lui donner l'action de chercher
-        if (this.alienDistance <= 2.5) {
+        if (this.alienDistance <= 2.5 || this.alien.peacefulness <= 5) {
             this.alien.search();
         }
         this.changeAlienState();
@@ -123,7 +147,9 @@ class Interface extends React.Component {
      * @returns null
      */
     changeAlienDistance(value) {
-        this.alienDistance += value;
+        if (this.alienDistance + value >= 0) {
+            this.alienDistance += value;
+        }
     }
 
     /**
