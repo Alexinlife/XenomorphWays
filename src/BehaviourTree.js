@@ -15,6 +15,8 @@ class BehaviourTree {
      * @author Alex Lajeunesse
      * 
      * @description Constructeur de BehaviourTree
+     * 
+     * @params null
      * @returns null
      */
     constructor() {
@@ -96,6 +98,18 @@ class BehaviourTree {
             }
         }
         return children;
+    }
+
+    /**
+     * @author Alex Lajeunesse
+     * 
+     * @description Obtient l'enfant d'un parent selon la position demandé dans l'ordre des identifiants.
+     * 
+     * @param {*} name Le nom du parent
+     * @param {*} pos La position du comportement cherché
+     */
+    getNthChild(name, pos) {
+        return this.getChildrenByName(name)[pos];
     }
 }
 

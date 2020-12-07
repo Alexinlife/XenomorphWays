@@ -5,7 +5,7 @@ import BehaviourTree from "./BehaviourTree";
  * 
  * @class Alien
  * 
- * @classdesc 
+ * @classdesc Gère les interactions de son BT selon les informations envoyées par l'interface
  */
 class Alien {
 
@@ -13,6 +13,9 @@ class Alien {
      * @author Alex Lajeunesse
      * 
      * @description Constructeur d'Alien
+     * 
+     * @params null
+     * @returns null
      */
     constructor() {
         // Création du behaviour tree du Xenomorph
@@ -30,7 +33,7 @@ class Alien {
         this.bt.createBehaviour(5, "decorator", "sawsomething");
         this.bt.createBehaviour(7, "leaf", "kill", "Le Xenomorph t'as vu et t'as tué.");
 
-        this.aggressivity = 0;
+        this.peacefulness = 20;
         this.alienState = "";
         this.alienBehaviour = null;
     }
@@ -45,12 +48,37 @@ class Alien {
      */
     chooseNextMove(stimulus) {
         var behaviour = this.bt.getBehaviourByName(stimulus);
-        var children = [];
+        // Si le comportement existe
         if (behaviour) {
-            children = this.bt.getChildrenByName(behaviour.name);
-            this.alienState = children[0].description;
-            this.alienBehaviour = children[0];
+            // Changer le state pour le premier comportement découlant du parent
+            this.alienState = this.bt.getNthChild(behaviour.name, 0).description;
+            this.alienBehaviour = this.bt.getNthChild(behaviour.name, 0);
         }
+    }
+
+    /**
+     * @author Alex Lajeunesse
+     * 
+     * @description Applique la séquence de la branche "search" du BT
+     */
+    search() {
+        this.chooseNextMove("search");
+        if (this.getRndInteger(0, this.peacefulness) === 0) {
+            this.chooseNextMove("sawsomething");
+        }
+    }
+
+    /**
+     * @author W3Schools
+     * 
+     * @description This JavaScript function always returns a random number between min (included) and max (excluded)
+     * @see https://www.w3schools.com/js/js_random.asp
+     * 
+     * @param {*} min La valeur minimale inclusive
+     * @param {*} max La valeur maximale exclusive
+     */
+    getRndInteger(min, max) {
+        return Math.floor(Math.random() * (max - min)) + min;
     }
 }
 

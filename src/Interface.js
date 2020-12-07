@@ -16,6 +16,14 @@ import Alien from './Alien';
  */
 class Interface extends React.Component {
 
+    /**
+     * @author Alex Lajeunesse
+     * 
+     * @description Constructeur d'Interface
+     * 
+     * @param props Les propriétés React
+     * @returns null
+     */
     constructor(props) {
         super(props);
         this.alienDistance = 10;
@@ -28,23 +36,28 @@ class Interface extends React.Component {
         }
     }
 
+    /**
+     * @author Alex Lajeunesse
+     * 
+     * @description Guide l'Alien lorsque le joueur clique sur le bouton "Courir"
+     * 
+     * @params null
+     * @returns null
+     */
     run() {
-        // L'Alien entendra du son
-        this.alien.chooseNextMove("heardsound");
-
-        // Si l'Alien s'approche, avertir l'interface que la distance a changé
-        if (this.alien.alienBehaviour.name === "approach") {
-            this.changeAlienDistance(-2);
-        }
-        // Si l'Alien est très près du joueur, lui donner l'action de chercher
-        if (this.alienDistance <= 2.5) {
-            this.alien.chooseNextMove("search");
-        }
-        this.changeAlienState();
+        this.produceSound(-2, -2);
     }
 
+    /**
+     * @author Alex Lajeunesse
+     * 
+     * @description Guide l'Alien lorsque le joueur clique sur le bouton "Marcher"
+     * 
+     * @params null
+     * @returns null
+     */
     walk() {
-        
+        this.produceSound(-1, 0);
     }
 
     hide() {
@@ -55,29 +68,101 @@ class Interface extends React.Component {
 
     }
 
-    scream() {
-
-    }
-
     throwObject() {
-        this.changeAlienDistance(-10);
+        if (this.alienDistance <= 5) {
+            this.produceSound(1, 0);
+        } else {
+            this.produceSound(-2, -1);
+        }
+        this.changeAlienDistance(-1);
     }
 
+    /**
+     * @author Alex Lajeunesse
+     * 
+     * @description Affiche la distance de l'Alien par rapport au joueur à l'écran
+     * 
+     * @params null
+     * @returns null
+     */
     useTracker() {
         this.alien.alienState = "Le Xenomorph est à " + this.alienDistance + " mètres.";
         this.changeAlienState();
     }
 
+    /**
+     * @author Alex Lajeunesse
+     * 
+     * @description Donne les informations nécessaire à l'Alien pour réagir lorsqu'un son est produit
+     * 
+     * @param {*} peacefulness Le changement à apporter 
+     * @param {*} distance 
+     */
+    produceSound(peacefulness, distance) {
+        this.changeAlienPeacefulness(peacefulness);
+        // L'Alien entendra du son
+        this.alien.chooseNextMove("heardsound");
+
+        // Si l'Alien s'approche, avertir l'interface que la distance a changé
+        if (this.alien.alienBehaviour.name === "approach") {
+            this.changeAlienDistance(distance);
+        }
+        // Si l'Alien est très près du joueur, lui donner l'action de chercher
+        if (this.alienDistance <= 2.5) {
+            this.alien.search();
+        }
+        this.changeAlienState();
+    }
+
+    /**
+     * @author Alex Lajeunesse
+     * 
+     * @description Change la distance de l'Alien par rapport au joueur
+     * 
+     * @param {*} value La distance à ajouter à la valeur actuelle
+     * @returns null
+     */
     changeAlienDistance(value) {
         this.alienDistance += value;
     }
 
+    /**
+     * @author Alex Lajeunesse
+     * 
+     * @description Change le niveau de tranquilité de l'Alien
+     * @description Plus cette valeur est basse, plus l'Alien trouvera facilement le joueur
+     * 
+     * @param {*} value Le niveau de tranquilité à soustraire
+     * @returns null
+     */
+    changeAlienPeacefulness(value) {
+        if (this.alien.peacefulness + value >= 0) {
+            this.alien.peacefulness += value;
+        }
+    }
+
+    /**
+     * @author Alex Lajeunesse
+     * 
+     * @description Change le state de l'Alien selon son propre état
+     * 
+     * @params null
+     * @returns null
+     */
     changeAlienState() {
         this.setState({
             alienState: this.alien.alienState
         });
     }
 
+    /**
+     * @author Alex Lajeunesse
+     * 
+     * @description Rendu de la page Web pour Interface
+     * 
+     * @params null
+     * @returns null
+     */
     render() {
         return (
             <div className="content">
@@ -93,7 +178,6 @@ class Interface extends React.Component {
                 <Button className="button" variant="contained" onClick={this.hide.bind(this)}>Se cacher</Button>
                 <Button className="button" variant="contained" onClick={this.crouch.bind(this)}>S'accroupir</Button>
                 <p>Actions</p>
-                <Button className="button" color="secondary" variant="contained" onClick={this.scream.bind(this)}>Crier</Button>
                 <Button className="button" variant="contained" onClick={this.throwObject.bind(this)}>Lancer un objet</Button>
                 <Button className="button" color="primary" variant="contained" onClick={this.useTracker.bind(this)}>Utiliser le traceur</Button>
             </div>
