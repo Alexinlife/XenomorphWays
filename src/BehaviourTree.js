@@ -83,6 +83,26 @@ class BehaviourTree {
     /**
      * @author Alex Lajeunesse
      * 
+     * @description Trouve le comportement avec l'identifiant correspondant.
+     * 
+     * @param {*} id L'identifiant du comportement
+     * 
+     * @returns le comportement s'il existe, sinon false
+     */
+    getBehaviourById(id) {
+
+        for (let i = 0; i < this.behaviours.length; i++) {
+            if (id === this.behaviours[i].id) {
+                this.cursor = this.behaviours[i].id;
+                return this.behaviours[i];
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @author Alex Lajeunesse
+     * 
      * @description Trouve les enfants directement lié au comportement ayant le nom demandé
      * 
      * @param {*} name Le nom du comportement
@@ -107,6 +127,30 @@ class BehaviourTree {
     /**
      * @author Alex Lajeunesse
      * 
+     * @description Trouve les enfants directement lié au comportement ayant l'identifiant demandé
+     * 
+     * @param {*} id L'identifiant du comportement
+     * 
+     * @returns Un tableau contenant les enfants directement liés au comportement demandé
+     */
+    getChildrenById(id) {
+        var parent = this.getBehaviourById(id);
+        var children = [];
+
+        if (parent) {
+            this.cursor = parent.id;
+        }
+        for (let i = 0; i < this.behaviours.length; i++) {
+            if (parent.id === this.behaviours[i].parentId) {
+                children.push(this.behaviours[i]);
+            }
+        }
+        return children;
+    }
+
+    /**
+     * @author Alex Lajeunesse
+     * 
      * @description Obtient l'enfant d'un parent selon la position demandé dans l'ordre des identifiants.
      * 
      * @param {*} name Le nom du parent
@@ -115,7 +159,49 @@ class BehaviourTree {
      * @returns null
      */
     getNthChild(name, pos) {
-        return this.getChildrenByName(name)[pos];
+        this.cursor = this.getChildrenByName(name)[pos]
+        return this.cursor;
+    }
+
+    /**
+     * @author Alex Lajeunesse
+     * 
+     * @description Retourne le dernier comportement (ou parent) sélectionné
+     * 
+     * @params null
+     * 
+     * @returns Le dernier comportement (ou parent) sélectionné
+     */
+    getLastBehaviour() {
+        return this.cursor;
+    }
+    
+    /**
+     * @author Alex Lajeunesse
+     * 
+     * @description Retourne le type du comportement ayant le nom demandé
+     * 
+     * @param {*} name Le nom du comportement
+     * 
+     * @returns Le type du comportement demandé
+     */
+    getBehaviourTypeByName(name) {
+        this.cursor = this.getBehaviourByName(name).type;
+        return this.cursor;
+    }
+
+    /**
+     * @author Alex Lajeunesse
+     * 
+     * @description Retourne le type du comportement ayant l'identifiant demandé
+     * 
+     * @param {*} id L'identifiant du comportement
+     * 
+     * @returns Le type du comportement demandé
+     */
+    getBehaviourTypeById(id) {
+        this.cursor = this.getBehaviourById(id).type;
+        return this.cursor;
     }
 }
 

@@ -38,6 +38,12 @@ class Interface extends React.Component {
     }
 
     /**
+     * <-----ACTIONS----->
+     * Chaque bouton appelle la méthode setAlienReaction()
+     * Cette dernière sert à faire réagir l'Alien selon certains paramètres
+     */
+
+    /**
      * @author Alex Lajeunesse
      * 
      * @description Guide l'Alien lorsque le joueur clique sur le bouton "Courir"
@@ -121,6 +127,11 @@ class Interface extends React.Component {
     }
 
     /**
+     * <-----MÉTHODES XENOMORPH----->
+     * Méthodes servant à interagir avec le Xenomorph
+     */
+
+    /**
      * @author Alex Lajeunesse
      * 
      * @description Prépare le changement des propriétés de l'Alien pour triggerAlien()
@@ -197,6 +208,12 @@ class Interface extends React.Component {
             this.alien.peacefulness += value;
         }
     }
+
+    /**
+     * <-----AUTRES MÉTHODES----->
+     * Méthodes générales comme pour utiliser setState,
+     * générer un nombre aléatoire et faire le rendu
+     */
 
     /**
      * @author Alex Lajeunesse
