@@ -15,6 +15,7 @@ class Behaviour {
      * @description Constructeur de Behaviour
      * 
      * @param id L'identifiant du noeud
+     * 
      * @returns null
      */
     constructor(id, parentId, type, name, description) {

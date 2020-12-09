@@ -22,6 +22,7 @@ class Interface extends React.Component {
      * @description Constructeur d'Interface
      * 
      * @param props Les propriétés React
+     * 
      * @returns null
      */
     constructor(props) {
@@ -42,10 +43,11 @@ class Interface extends React.Component {
      * @description Guide l'Alien lorsque le joueur clique sur le bouton "Courir"
      * 
      * @params null
+     * 
      * @returns null
      */
     run() {
-        this.triggerAlien(-2, -2);
+        this.setAlienReaction(-3, -1, -4, -1);
     }
 
     /**
@@ -54,22 +56,11 @@ class Interface extends React.Component {
      * @description Guide l'Alien lorsque le joueur clique sur le bouton "Marcher"
      * 
      * @params null
+     * 
      * @returns null
      */
     walk() {
-        this.triggerAlien(-1, 0);
-    }
-
-    /**
-     * @author Alex Lajeunesse
-     * 
-     * @description Guide l'Alien lorsque le joueur clique sur le bouton "Se cacher"
-     * 
-     * @params null
-     * @returns null
-     */
-    hide() {
-        this.triggerAlien(2, 1);
+        this.setAlienReaction(-2, 2, -2, 2);
     }
 
     /**
@@ -78,10 +69,24 @@ class Interface extends React.Component {
      * @description Guide l'Alien lorsque le joueur clique sur le bouton "S'accroupir"
      * 
      * @params null
+     * 
      * @returns null
      */
     crouch() {
-        this.triggerAlien(1, 0);
+        this.setAlienReaction(-1, 2, -2, 3);
+    }
+
+    /**
+     * @author Alex Lajeunesse
+     * 
+     * @description Guide l'Alien lorsque le joueur clique sur le bouton "Se cacher"
+     * 
+     * @params null
+     * 
+     * @returns null
+     */
+    hide() {
+        this.setAlienReaction(-1, 4, -1, 4);
     }
 
     /**
@@ -90,15 +95,15 @@ class Interface extends React.Component {
      * @description Guide l'Alien lorsque le joueur clique sur le bouton "Lancer un objet"
      * 
      * @params null
+     * 
      * @returns null
      */
     throwObject() {
         if (this.alienDistance <= 5) {
-            this.triggerAlien(1, 0);
+            this.setAlienReaction(-3, 0, -4, -1);
         } else {
-            this.triggerAlien(-2, -1);
+            this.setAlienReaction(-3, 0, -4, -1);
         }
-        this.changeAlienDistance(-1);
     }
 
     /**
@@ -107,6 +112,7 @@ class Interface extends React.Component {
      * @description Affiche la distance de l'Alien par rapport au joueur à l'écran
      * 
      * @params null
+     * 
      * @returns null
      */
     useTracker() {
@@ -117,10 +123,33 @@ class Interface extends React.Component {
     /**
      * @author Alex Lajeunesse
      * 
+     * @description Prépare le changement des propriétés de l'Alien pour triggerAlien()
+     * 
+     * @param {*} minP Le niveau de tranquilité minimum
+     * @param {*} maxP Le niveau de tranquilité maximum
+     * @param {*} minD La distance minimum
+     * @param {*} maxD La distance maximum
+     * 
+     * @returns null
+     */
+    setAlienReaction(minP, maxP, minD, maxD) {
+        // Niveau de tranquilité aléatoire
+        var p = this.getRndInteger(minP, maxP);
+        // Distance aléatoire
+        var d = this.getRndInteger(minD, maxD);
+        // Application des paramètres
+        this.triggerAlien(p, d);
+    }
+
+    /**
+     * @author Alex Lajeunesse
+     * 
      * @description Donne les informations nécessaire à l'Alien pour réagir lorsqu'un son est produit
      * 
-     * @param {*} peacefulness Le changement à apporter 
-     * @param {*} distance 
+     * @param {*} peacefulness La valeur tranquilité à ajouter
+     * @param {*} distance La distance à ajouter
+     * 
+     * @returns null
      */
     triggerAlien(peacefulness, distance) {
         this.changeAlienPeacefulness(peacefulness);
@@ -144,6 +173,7 @@ class Interface extends React.Component {
      * @description Change la distance de l'Alien par rapport au joueur
      * 
      * @param {*} value La distance à ajouter à la valeur actuelle
+     * 
      * @returns null
      */
     changeAlienDistance(value) {
@@ -159,6 +189,7 @@ class Interface extends React.Component {
      * @description Plus cette valeur est basse, plus l'Alien trouvera facilement le joueur
      * 
      * @param {*} value Le niveau de tranquilité à soustraire
+     * 
      * @returns null
      */
     changeAlienPeacefulness(value) {
@@ -173,6 +204,7 @@ class Interface extends React.Component {
      * @description Change le state de l'Alien selon son propre état
      * 
      * @params null
+     * 
      * @returns null
      */
     changeAlienState() {
@@ -182,11 +214,27 @@ class Interface extends React.Component {
     }
 
     /**
+    * @author W3Schools
+    * 
+    * @description This JavaScript function always returns a random number between min (included) and max (excluded)
+    * @see https://www.w3schools.com/js/js_random.asp
+    * 
+    * @param {*} min La valeur minimale inclusive
+    * @param {*} max La valeur maximale exclusive
+    * 
+    * @returns null
+    */
+    getRndInteger(min, max) {
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
+
+    /**
      * @author Alex Lajeunesse
      * 
      * @description Rendu de la page Web pour Interface
      * 
      * @params null
+     * 
      * @returns null
      */
     render() {

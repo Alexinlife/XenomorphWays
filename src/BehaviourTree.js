@@ -17,6 +17,7 @@ class BehaviourTree {
      * @description Constructeur de BehaviourTree
      * 
      * @params null
+     * 
      * @returns null
      */
     constructor() {
@@ -40,6 +41,7 @@ class BehaviourTree {
      * "leaf"         feuille d'une branche
      * @param name le nom donné au comportement
      * @param description la description du comportement, peut donner plus de contexte
+     * 
      * @returns null
      */
     createBehaviour(parentId, type, name, description) {
@@ -64,6 +66,7 @@ class BehaviourTree {
      * @description Trouve le comportement avec le nom correspondant.
      * 
      * @param {*} name Le nom du comportement
+     * 
      * @returns le comportement s'il existe, sinon false
      */
     getBehaviourByName(name) {
@@ -83,6 +86,7 @@ class BehaviourTree {
      * @description Trouve les enfants directement lié au comportement ayant le nom demandé
      * 
      * @param {*} name Le nom du comportement
+     * 
      * @returns Un tableau contenant les enfants directement liés au comportement demandé
      */
     getChildrenByName(name) {
@@ -107,6 +111,8 @@ class BehaviourTree {
      * 
      * @param {*} name Le nom du parent
      * @param {*} pos La position du comportement cherché
+     * 
+     * @returns null
      */
     getNthChild(name, pos) {
         return this.getChildrenByName(name)[pos];

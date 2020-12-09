@@ -15,6 +15,7 @@ class Alien {
      * @description Constructeur d'Alien
      * 
      * @params null
+     * 
      * @returns null
      */
     constructor() {
@@ -44,6 +45,7 @@ class Alien {
      * @description Choisis  le comportement de l'Alien selon le stimulus et le BT
      * 
      * @param {*} stimulus Le stimulus envoyé par les actions du joueur
+     * 
      * @returns null
      */
     chooseNextMove(stimulus) {
@@ -60,6 +62,10 @@ class Alien {
      * @author Alex Lajeunesse
      * 
      * @description Applique la séquence de la branche "search" du BT
+     * 
+     * @params null
+     * 
+     * @returns null
      */
     search() {
         this.chooseNextMove("search");
@@ -69,14 +75,16 @@ class Alien {
     }
 
     /**
-     * @author W3Schools
-     * 
-     * @description This JavaScript function always returns a random number between min (included) and max (excluded)
-     * @see https://www.w3schools.com/js/js_random.asp
-     * 
-     * @param {*} min La valeur minimale inclusive
-     * @param {*} max La valeur maximale exclusive
-     */
+    * @author W3Schools
+    * 
+    * @description This JavaScript function always returns a random number between min (included) and max (excluded)
+    * @see https://www.w3schools.com/js/js_random.asp
+    * 
+    * @param {*} min La valeur minimale inclusive
+    * @param {*} max La valeur maximale exclusive
+    * 
+    * @returns null
+    */
     getRndInteger(min, max) {
         return Math.floor(Math.random() * (max - min)) + min;
     }
